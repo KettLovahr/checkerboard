@@ -13,6 +13,7 @@ for (let i = 0; i < width; i++) {
     n_row.classList.add("row");
     for (let j = 0; j < height; j++) {
         let n_tile = document.createElement("div")
+        n_tile.style.border = "solid 0px #00A2E8"
         n_row.appendChild(n_tile);
         n_tile.classList.add("tile");
         n_tile.style.backgroundColor = (i + j) % 2 == 0 ? "#DA9" : "#533";
@@ -22,6 +23,7 @@ for (let i = 0; i < width; i++) {
         }
 
         n_tile.ondragenter = function(ev) {
+            if (n_tile.childElementCount == 0)
             if (ev.dataTransfer.getData("is_queen")) {
                 n_tile.style.filter = "brightness(2.0)"
                 n_tile.style.border = "solid 2px #00A2E8"
@@ -36,17 +38,24 @@ for (let i = 0; i < width; i++) {
         }
 
         n_tile.ondrop = function(ev) {
-            console.log("AAAAAA");
-            let data = ev.dataTransfer.getData("text");
+            if (n_tile.childElementCount == 0) {
+                console.log("AAAAAA");
+                let data = ev.dataTransfer.getData("text");
+                let qel = document.getElementById(data);
 
-            ev.target.appendChild(document.getElementById(data));
-            n_tile.style.filter = "brightness(1.0)"
-            n_tile.style.border = "solid 0px #00A2E8"
+                queen_positions[qel.queen_index] = {x: j, y: i}
+                ev.target.appendChild(qel);
+                n_tile.style.filter = "brightness(1.0)";
+                n_tile.style.border = "solid 0px #00A2E8";
+            } else {
+                console.log("aí não dá né");
+            }
         }
     }
 }
 
 for (let q = 0; q < 8; q++) {
+    queen_positions.push({x: -1, y: -1})
     let n_queen = document.createElement("div");
     n_queen.draggable = true;
     queens.appendChild(n_queen);

@@ -38,6 +38,7 @@ body {
     align-content: center;
     width: 48px;
     height: 48px;
+    transition-duration: 0.3s;
 }
 
 .queen {
