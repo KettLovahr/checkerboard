@@ -4,6 +4,7 @@ body {
     background-color: #20262F;
     color: white;
     font-family: sans-serif;
+    user-select: none;
 }
 
 #board {
