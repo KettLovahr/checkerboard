@@ -42,8 +42,11 @@ for (let i = 0; i < width; i++) {
                 console.log("AAAAAA");
                 let data = ev.dataTransfer.getData("text");
                 let qel = document.getElementById(data);
+                qel.draggable = false;
 
                 queen_positions[qel.queen_index] = {x: j, y: i}
+                validate();
+
                 ev.target.appendChild(qel);
                 n_tile.style.filter = "brightness(1.0)";
                 n_tile.style.border = "solid 0px #00A2E8";
@@ -61,10 +64,50 @@ for (let q = 0; q < 8; q++) {
     queens.appendChild(n_queen);
     n_queen.classList.add("queen");
     n_queen.id = `queen${q}`;
+
     n_queen.queen_index = q;
 
     n_queen.ondragstart = function(ev) {
         ev.dataTransfer.setData("is_queen", true);
         ev.dataTransfer.setData("text", ev.target.id);
     }
+}
+
+function validate() {
+    let check = [ ...queen_positions ]
+    for (let i = 0; i < queen_amt; i++) {
+        for (let j = i; j < queen_amt; j++) {
+            if (j == i) continue;
+            let i_coords = queen_positions[i];
+            let j_coords = queen_positions[j];
+            if (i_coords.x == -1 || j_coords.y == -1) continue;
+
+            if (i_coords.x == j_coords.x || i_coords.y == j_coords.y || Math.abs(i_coords.x - j_coords.x) == Math.abs(i_coords.y - j_coords.y)) {
+                setTimeout(
+                    function() {
+                        document.getElementById(`queen${i}`).parentElement.style.backgroundColor = "#F00";
+                        document.getElementById(`queen${j}`).parentElement.style.backgroundColor = "#F00";
+                        document.getElementById("result").style.display = "block";
+                        document.getElementById("message").innerHTML = "Você Perdeu";
+                    },
+                    300
+                );
+                return false;
+            }
+        }
+    }
+
+    check_win();
+    return true;
+}
+
+function check_win() {
+    for (let i = 0; i < queen_amt; i++) {
+        if (queen_positions[i].x == -1) {
+            return false;
+        }
+    }
+    document.getElementById("result").style.display = "block";
+    document.getElementById("message").innerHTML = "Você Ganhou!";
+    return true;
 }
