@@ -3,7 +3,6 @@ let height = 8;
 let queen_amt = 8;
 let queen_positions = []
 
-
 let board = document.getElementById("board");
 let queens = document.getElementById("queens");
 
@@ -74,7 +73,6 @@ for (let q = 0; q < 8; q++) {
 }
 
 function validate() {
-    let check = [ ...queen_positions ]
     for (let i = 0; i < queen_amt; i++) {
         for (let j = i; j < queen_amt; j++) {
             if (j == i) continue;
