@@ -22,13 +22,17 @@ for (let i = 0; i < width; i++) {
         }
 
         n_tile.ondragenter = function(ev) {
-            n_tile.style.filter = "brightness(2.0)"
-            n_tile.style.border = "solid 2px #00A2E8"
+            if (ev.dataTransfer.getData("is_queen")) {
+                n_tile.style.filter = "brightness(2.0)"
+                n_tile.style.border = "solid 2px #00A2E8"
+            }
         }
 
         n_tile.ondragleave = function(ev) {
-            n_tile.style.filter = "brightness(1.0)"
-            n_tile.style.border = "solid 0px #00A2E8"
+            if (ev.dataTransfer.getData("is_queen")) {
+                n_tile.style.filter = "brightness(1.0)"
+                n_tile.style.border = "solid 0px #00A2E8"
+            }
         }
 
         n_tile.ondrop = function(ev) {
@@ -47,9 +51,11 @@ for (let q = 0; q < 8; q++) {
     n_queen.draggable = true;
     queens.appendChild(n_queen);
     n_queen.classList.add("queen");
+    n_queen.id = `queen${q}`;
     n_queen.queen_index = q;
 
     n_queen.ondragstart = function(ev) {
+        ev.dataTransfer.setData("is_queen", true);
         ev.dataTransfer.setData("text", ev.target.id);
     }
 }
