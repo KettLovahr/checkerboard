@@ -16,6 +16,24 @@ for (let i = 0; i < width; i++) {
         n_tile.classList.add("tile");
         n_tile.style.backgroundColor = (i + j) % 2 == 0 ? "#DA9" : "#533";
 
+        n_tile.onclick = function(ev) {
+            if (!n_tile.classList.contains("confirm")) {
+                n_tile.classList.add("confirm");
+                setTimeout(function() {n_tile.classList.remove("confirm")}, 3000);
+            } else {
+                if (n_tile.childElementCount == 0) {
+                    let qel = queens.children[0]
+                    qel.draggable = false;
+
+                    queen_positions[qel.queen_index] = {x: j, y: i}
+                    validate();
+
+                    ev.target.appendChild(qel);
+                    n_tile.classList.remove("confirm")
+                }
+            }
+        }
+
         n_tile.ondragover = function(ev) {
             ev.preventDefault();
         }
