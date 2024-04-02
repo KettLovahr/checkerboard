@@ -17,11 +17,11 @@ for (let i = 0; i < width; i++) {
         n_tile.style.backgroundColor = (i + j) % 2 == 0 ? "#DA9" : "#533";
 
         n_tile.onclick = function(ev) {
-            if (!n_tile.classList.contains("confirm")) {
-                n_tile.classList.add("confirm");
-                setTimeout(function() {n_tile.classList.remove("confirm")}, 3000);
-            } else {
-                if (n_tile.childElementCount == 0) {
+            if (n_tile.childElementCount == 0) {
+                if (!n_tile.classList.contains("confirm")) {
+                    n_tile.classList.add("confirm");
+                    setTimeout(function() {n_tile.classList.remove("confirm")}, 3000);
+                } else {
                     let qel = queens.children[0]
                     qel.draggable = false;
 
