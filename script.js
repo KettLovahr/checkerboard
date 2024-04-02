@@ -43,6 +43,7 @@ for (let i = 0; i < width; i++) {
                 validate();
 
                 ev.target.appendChild(qel);
+                n_tile.classList.remove("tiledraghover")
             } else {
                 console.log("aí não dá né");
             }
