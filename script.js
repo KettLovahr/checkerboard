@@ -35,7 +35,6 @@ for (let i = 0; i < width; i++) {
 
         n_tile.ondrop = function(ev) {
             if (n_tile.childElementCount == 0) {
-                console.log("AAAAAA");
                 let data = ev.dataTransfer.getData("text");
                 let qel = document.getElementById(data);
                 qel.draggable = false;
