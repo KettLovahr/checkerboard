@@ -43,8 +43,6 @@ for (let i = 0; i < width; i++) {
                 validate();
 
                 ev.target.appendChild(qel);
-                n_tile.style.filter = "brightness(1.0)";
-                n_tile.style.border = "solid 0px #00A2E8";
             } else {
                 console.log("aí não dá né");
             }
