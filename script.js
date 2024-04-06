@@ -12,10 +12,27 @@ for (let i = 0; i < width; i++) {
     n_row.classList.add("row");
     for (let j = 0; j < height; j++) {
         let n_tile = document.createElement("div")
-        n_tile.style.border = "solid 0px #00A2E8"
         n_row.appendChild(n_tile);
         n_tile.classList.add("tile");
         n_tile.style.backgroundColor = (i + j) % 2 == 0 ? "#DA9" : "#533";
+
+        n_tile.onclick = function(ev) {
+            if (n_tile.childElementCount == 0) {
+                if (!n_tile.classList.contains("confirm")) {
+                    n_tile.classList.add("confirm");
+                    setTimeout(function() {n_tile.classList.remove("confirm")}, 3000);
+                } else {
+                    let qel = queens.children[0]
+                    qel.draggable = false;
+
+                    queen_positions[qel.queen_index] = {x: j, y: i}
+                    validate();
+
+                    ev.target.appendChild(qel);
+                    n_tile.classList.remove("confirm")
+                }
+            }
+        }
 
         n_tile.ondragover = function(ev) {
             ev.preventDefault();
@@ -24,21 +41,18 @@ for (let i = 0; i < width; i++) {
         n_tile.ondragenter = function(ev) {
             if (n_tile.childElementCount == 0)
             if (ev.dataTransfer.getData("is_queen")) {
-                n_tile.style.filter = "brightness(2.0)"
-                n_tile.style.border = "solid 2px #00A2E8"
+                n_tile.classList.add("tiledraghover");
             }
         }
 
         n_tile.ondragleave = function(ev) {
             if (ev.dataTransfer.getData("is_queen")) {
-                n_tile.style.filter = "brightness(1.0)"
-                n_tile.style.border = "solid 0px #00A2E8"
+                n_tile.classList.remove("tiledraghover");
             }
         }
 
         n_tile.ondrop = function(ev) {
             if (n_tile.childElementCount == 0) {
-                console.log("AAAAAA");
                 let data = ev.dataTransfer.getData("text");
                 let qel = document.getElementById(data);
                 qel.draggable = false;
@@ -47,8 +61,7 @@ for (let i = 0; i < width; i++) {
                 validate();
 
                 ev.target.appendChild(qel);
-                n_tile.style.filter = "brightness(1.0)";
-                n_tile.style.border = "solid 0px #00A2E8";
+                n_tile.classList.remove("tiledraghover")
             } else {
                 console.log("aí não dá né");
             }
