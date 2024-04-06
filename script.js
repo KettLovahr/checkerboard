@@ -83,8 +83,8 @@ function validate() {
             if (i_coords.x == j_coords.x || i_coords.y == j_coords.y || Math.abs(i_coords.x - j_coords.x) == Math.abs(i_coords.y - j_coords.y)) {
                 setTimeout(
                     function() {
-                        document.getElementById(`queen${i}`).parentElement.style.backgroundColor = "#F00";
-                        document.getElementById(`queen${j}`).parentElement.style.backgroundColor = "#F00";
+                        document.getElementById(`queen${i}`).parentElement.style.backgroundColor = "#D20";
+                        document.getElementById(`queen${j}`).parentElement.style.backgroundColor = "#D20";
                         document.getElementById("result").style.display = "block";
                         document.getElementById("message").innerHTML = "Você Perdeu";
                     },
